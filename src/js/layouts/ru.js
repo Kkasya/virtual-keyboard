@@ -275,7 +275,7 @@ export default [
         code: 'ShiftRight',
     },
     {
-        small: 'en',
+        small: '=> en',
         shift: null,
         code: 'ControlLeft',
     },
@@ -285,7 +285,7 @@ export default [
         code: 'Space',
     },
     {
-        small: 'en',
+        small: '=> en',
         shift: null,
         code: 'ControlRight',
     },
