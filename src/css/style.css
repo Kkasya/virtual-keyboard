@@ -5,7 +5,7 @@
 
 html {
     font-size: 100%;
-    font-family: 'Ubuntu', Arial, sans-serif;
+    font-family:'Ubuntu Mono', monospace, sans-serif;
 }
 
 body {
@@ -16,15 +16,28 @@ main {
     width: 1020px;
     margin: auto;
 }
+.header {
+    display: flex;
+    justify-content: center;
+}
+h1 {
+    text-align: center;
+    color: slateblue;
+    font-size: 45px;
+    margin: 20px;
+}
+img {
+    margin: 20px;
+    max-width: 130px;
 
+}
 .keyboard {
     display: grid;
     grid-row-gap: 10px;
     padding: 10px;
-    border: 1px solid;
     position: relative;
     overflow: hidden;
-    background: #2c2c2c;
+    background: #3e3459;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -47,7 +60,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgb(100,100,100) radial-gradient(circle at 0 0, rgba(255,255,255,.75), rgba(255,255,255,.35));
+    background: rgb(61,48,97) radial-gradient(circle at 0 0, rgba(255,255,255,.75), rgba(255,255,255,.35));
     box-shadow: inset rgba(0,0,0,.75) -1px -1px 2px, inset rgba(255,255,255,.9) 1px 1px 2px, rgba(0,0,0,.8) 1px 1px 2px -1px;
     transition: all .2s ease;
     -webkit-border-radius: 3px;
@@ -85,11 +98,11 @@ main {
 }
 
 [data-code="CapsLock"] {
-    width: 86px;
+    width: 100px;
 }
 
 [data-code="ShiftLeft"] {
-    width: 100px;
+    width: 120px;
 }
 
 [data-code="ShiftRight"] {
@@ -129,7 +142,7 @@ main {
 [data-code="ArrowUp"],
 [data-code="ArrowDown"],
 [data-code="ArrowRight"] {
-    background: rgb(125, 253, 75);
+    background: #6b4ad4;
 }
 
 
@@ -152,10 +165,6 @@ main {
     -ms-transform: translateX(0);
     -o-transform: translateX(0);
     transform-origin: center;
-}
-
-.subtitle, .hint {
-    color: #666;
 }
 
 textarea.output {

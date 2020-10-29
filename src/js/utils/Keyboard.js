@@ -3,7 +3,12 @@ import create from './create.js';
 import language from '../layouts/index.js'; // { en, ru }
 import Key from './Key.js';
 
-const main = create('main', '', [create('h1', 'title', 'Virtual Keyboard')]);
+const img = create('img', '');
+img.src = '../../src/images/keyboard1.png';
+const header = create('div', 'header',
+    [create('h1', 'title', 'Virtual Keyboard'), img]);
+const main = create('main', '', header);
+
 
 export default class Keyboard {
     constructor(rowsOrder) {
