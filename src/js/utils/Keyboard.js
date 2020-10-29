@@ -58,12 +58,31 @@ export default class Keyboard {
 
         if (type.match(/keydown|mousedown/)) {
             if(type.match(/key/)) e.preventDefault();
+
+            if (code.match(/Shift/)) {
+                this.shiftKey = this.shiftKey ? false : true;
+            }
+
             keyObject.div.classList.add('active');
 
             if(code.match(/Control/)) {
                // this.ctrlKey = true;
                 this.switchLanguage();
             }
+
+            if (!this.isCaps) {
+                console.log(this.shiftKey ? keyObject.shift : keyObject.small);
+
+                this.printInArea(keyObject, this.shiftKey ? keyObject.shift : keyObject.small);
+
+            } else if (this.isCaps) {
+                if (this.shiftKey) {
+                    this.printInArea(keyObject, keyObject.sub.innerHTML ? keyObject.shift : keyObject.small);
+                 } else {
+                    this.printInArea(keyObject, !keyObject.sub.innerHTML ? keyObject.shift : keyObject.small);
+                }
+            }
+
 
         } else if (type.match(/keyup|mouseup/)) {
             keyObject.div.classList.remove('active');
@@ -94,5 +113,47 @@ export default class Keyboard {
             }
             button.letter.innerHTML = keyBtn.small;
         })
+    }
+
+    printInArea(keyObj, symbol) {
+        let cursorPos = this.output.selectionStart;
+        const left = this.output.value.slice(0, cursorPos);
+        const right = this.output.value.slice(cursorPos);
+
+        const fnBtnHandler = {
+            Tab: () => {
+                this.output.value = `${left}\t${right}`;
+                cursorPos += 1;
+            },
+            ArrowLeft: () => {
+                cursorPos = cursorPos - 1 >= 0 ? cursorPos -1: 0;
+            },
+            ArrowRight: () => {
+                cursorPos = cursorPos + 1 <= this.output.value.length ? cursorPos + 1: this.output.value.length;
+            },
+            Enter: () => {
+                this.output.value = `${left}\n${right}`;
+                cursorPos += 1;
+            },
+            Delete: () => {
+                this.output.value =`${left}${right.slice(1)}`;
+            },
+            Backspace: () => {
+                this.output.value =`${left.slice(0, -1)}${right}`;
+                cursorPos -= 1;
+            },
+            Space: () => {
+                this.output.value = `${left} ${right}`;
+                cursorPos += 1;
+            }
+        }
+
+        if (fnBtnHandler[keyObj.code]) fnBtnHandler[keyObj.code]();
+
+        else if (!keyObj.isFnKey) {
+            cursorPos += 1;
+            this.output.value = `${left}${symbol || ''}${right}`;
+        }
+        this.output.setSelectionRange(cursorPos, cursorPos);
     }
 }

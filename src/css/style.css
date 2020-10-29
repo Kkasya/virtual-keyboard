@@ -116,15 +116,15 @@ img {
 }
 
 [data-code="Tab"] {
-    width: 76px;
+    width: 80px;
 }
 
 [data-code="ControlLeft"] {
-    width: 60px;
+    width: 80px;
 }
 
 [data-code="ControlRight"] {
-    width: 60px;
+    width: 76px;
 }
 
 [data-code="Backspace"] {
@@ -132,17 +132,15 @@ img {
 }
 
 [data-code="Space"] {
-    width: 610px;
+    width: 550px;
 }
 
 [data-code="AltLeft"],
 [data-code="AltRight"] {
-    width: 76px;
+    width: 60px;
 }
 
 [data-code="ArrowLeft"],
-[data-code="ArrowUp"],
-[data-code="ArrowDown"],
 [data-code="ArrowRight"] {
     background: #6b4ad4;
 }

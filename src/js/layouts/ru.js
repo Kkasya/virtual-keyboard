@@ -295,16 +295,6 @@ export default [
         code: 'ArrowLeft',
     },
     {
-        small: '&uarr;',
-        shift: null,
-        code: 'ArrowUp',
-    },
-    {
-        small: '&darr;',
-        shift: null,
-        code: 'ArrowDown',
-    },
-    {
         small: '&rarr;',
         shift: null,
         code: 'ArrowRight',
