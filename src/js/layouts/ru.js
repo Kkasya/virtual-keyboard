@@ -275,7 +275,7 @@ export default [
         code: 'ShiftRight',
     },
     {
-        small: 'ru',
+        small: 'en',
         shift: null,
         code: 'ControlLeft',
     },

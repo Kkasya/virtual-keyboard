@@ -3,7 +3,9 @@ export function set(name, value) {
 }
 
 export function get(name, subst = null) {
-    return JSON.parse(window.localStorage.getItem(name) | subst);
+    if (JSON.parse(window.localStorage.getItem(name))) {
+        return JSON.parse(window.localStorage.getItem(name));
+    } else return subst;
 }
 
 export function remove(name) {

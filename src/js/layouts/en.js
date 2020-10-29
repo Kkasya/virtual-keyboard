@@ -285,7 +285,7 @@ export default [
         code: 'Space',
     },
     {
-        small: 'en',
+        small: 'ru',
         shift: null,
         code: 'ControlRight',
     },

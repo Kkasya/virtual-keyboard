@@ -22,8 +22,9 @@ main {
 }
 h1 {
     text-align: center;
+    text-shadow: 4px 4px 3px #160a3d;
     color: slateblue;
-    font-size: 45px;
+    font-size: 65px;
     margin: 20px;
 }
 img {

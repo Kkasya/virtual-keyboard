@@ -53,13 +53,21 @@ export default class Keyboard {
         if(e.stopPropagation()) e.stopPropagation();
         const { code, type } = e;
         const keyObject = this.keyButtons.find(key => key.code === code);
+        if (!keyObject) return;
         this.output.focus();
 
         if (type.match(/keydown|mousedown/)) {
             if(type.match(/key/)) e.preventDefault();
             keyObject.div.classList.add('active');
+
+            if(code.match(/Control/)) {
+               // this.ctrlKey = true;
+                this.switchLanguage();
+            }
+
         } else if (type.match(/keyup|mouseup/)) {
             keyObject.div.classList.remove('active');
+           // if(code.match(/Control/)) this.ctrlKey = false;
         }
     }
 
@@ -70,6 +78,21 @@ export default class Keyboard {
             : language[langAttr[langIndex -= langIndex]];
 
         this.container.dataset.language = langAttr[langIndex];
+
         storage.set('kbLang', langAttr[langIndex]);
+
+        this.keyButtons.forEach(button => {
+            const keyBtn = this.keyBase.find(key => key.code === button.code);
+            if(!keyBtn) return;
+            button.shift = keyBtn.shift;
+            button.small = keyBtn.small;
+
+            if(keyBtn.shift && keyBtn.shift.match(/[^a-zA-Zа-яА-ЯёЁ0-9]/g)) {
+                button.sub.innerHTML = keyBtn.shift;
+            } else {
+                button.sub.innerHTML = '';
+            }
+            button.letter.innerHTML = keyBtn.small;
+        })
     }
 }
