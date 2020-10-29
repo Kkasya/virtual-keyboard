@@ -275,14 +275,9 @@ export default [
         code: 'ShiftRight',
     },
     {
-        small: 'Ctrl',
+        small: 'ru',
         shift: null,
         code: 'ControlLeft',
-    },
-    {
-        small: 'Alt',
-        shift: null,
-        code: 'AltLeft',
     },
     {
         small: ' ',
@@ -290,12 +285,7 @@ export default [
         code: 'Space',
     },
     {
-        small: 'Alt',
-        shift: null,
-        code: 'AltRight',
-    },
-    {
-        small: 'Ctrl',
+        small: 'en',
         shift: null,
         code: 'ControlRight',
     },

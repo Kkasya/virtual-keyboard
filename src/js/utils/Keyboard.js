@@ -36,13 +36,40 @@ export default class Keyboard {
             const rowElement = create('div', 'keyboard__row', null, this.container, ['row', i + 1]);
             rowElement.style.gridTemplateColumns = `repeat(${row.length}, 1fr)`;
             row.forEach((code) => {
-                const keyObj = this.keyBase.find((key) => key.code === code);
-                if (keyObj) {
-                    const keyButton = new Key(keyObj);
+                const keyObject = this.keyBase.find((key) => key.code === code);
+                if (keyObject) {
+                    const keyButton = new Key(keyObject);
                     this.keyButtons.push(keyButton);
                     rowElement.appendChild(keyButton.div);
                 }
             });
         });
+
+        document.addEventListener('keydown', this.handleEvent);
+        document.addEventListener('keyup', this.handleEvent);
+    }
+
+    handleEvent = (e) => {
+        if(e.stopPropagation()) e.stopPropagation();
+        const { code, type } = e;
+        const keyObject = this.keyButtons.find(key => key.code === code);
+        this.output.focus();
+
+        if (type.match(/keydown|mousedown/)) {
+            if(type.match(/key/)) e.preventDefault();
+            keyObject.div.classList.add('active');
+        } else if (type.match(/keyup|mouseup/)) {
+            keyObject.div.classList.remove('active');
+        }
+    }
+
+    switchLanguage = () => {
+        const langAttr = Object.keys(language);
+        let langIndex = langAttr.indexOf(this.container.dataset.language);
+        this.keyBase = langIndex + 1 < langAttr.length ? language[langAttr[langIndex += 1]]
+            : language[langAttr[langIndex -= langIndex]];
+
+        this.container.dataset.language = langAttr[langIndex];
+        storage.set('kbLang', langAttr[langIndex]);
     }
 }
