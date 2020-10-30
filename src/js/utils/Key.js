@@ -5,7 +5,7 @@ export default class Key {
         this.code = code;
         this.small = small;
         this.shift = shift;
-        this.isFnKey =Boolean(small.match(/en|ru|arr|Alt|Shift|Tab|Backspace|Delete|Enter|CapsLock|End/));
+        this.isFnKey =Boolean(small.match(/en|ru|arr|Alt|Shift|Tab|Backspace|Delete|Enter|CapsLock|Done/));
 
         if (shift && shift.match(/[^a-zA-Zа-яА-ЯёЁ0-9]/)) {
             this.sub = create('div', 'sub', this.shift);

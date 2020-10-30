@@ -217,15 +217,16 @@ export default class Keyboard {
                 this.output.value =`${left}${right.slice(1)}`;
             },
             Backspace: () => {
-                this.output.value =`${left.slice(0, -1)}${right}`;
-                cursorPos -= 1;
+                if (cursorPos - 1 >= 0) {
+                    this.output.value = `${left.slice(0, -1)}${right}`;
+                    cursorPos -= 1;
+                }
             },
             Space: () => {
                 this.output.value = `${left} ${right}`;
                 cursorPos += 1;
             },
             End: () => {
-                //this.container.classList.add('hidden');
                 setTimeout(() => {
                     this.container.classList.add('hidden');
                 }, 200);
