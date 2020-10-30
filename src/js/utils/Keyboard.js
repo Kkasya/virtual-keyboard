@@ -47,10 +47,31 @@ export default class Keyboard {
 
         document.addEventListener('keydown', this.handleEvent);
         document.addEventListener('keyup', this.handleEvent);
+        this.container.addEventListener('mousedown', this.preHandleEvent);
+        this.container.addEventListener('mouseup', this.preHandleEvent);
+    }
+
+    preHandleEvent = (e) => {
+        e.stopPropagation();
+        const keyDiv = e.target.closest('.keyboard__key');
+        if (!keyDiv) return;
+        const { dataset: { code } } = keyDiv;
+        // const code = keyDiv.dataset.code;
+        keyDiv.addEventListener('mouseleave', this.resetButton);
+        this.handleEvent({code, type: e.type});
+    }
+
+    resetButton = ( { target: { dataset: { code } } }) => {
+        const keyObject = this.keyButtons.find(key => key.code === code);
+        console.log(keyObject);
+        if (!keyObject.code.match(/Caps|Shift/)) {
+            keyObject.div.classList.remove('active');
+            keyObject.div.removeEventListener('mouseleave', this.resetButton);
+        }
     }
 
     handleEvent = (e) => {
-        if(e.stopPropagation()) e.stopPropagation();
+        if(e.stopPropagation) e.stopPropagation();
         const { code, type } = e;
         const keyObject = this.keyButtons.find(key => key.code === code);
         if (!keyObject) return;

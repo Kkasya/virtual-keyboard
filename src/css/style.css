@@ -120,11 +120,11 @@ img {
 }
 
 [data-code="ControlLeft"] {
-    width: 80px;
+    width: 100px;
 }
 
 [data-code="ControlRight"] {
-    width: 76px;
+    width: 100px;
 }
 
 [data-code="Backspace"] {
@@ -170,7 +170,7 @@ img {
 textarea.output {
     resize: none;
     width: 100%;
-    height: 200px;
+    height: 150px;
     padding: 10px;
     box-sizing: border-box;
     font-size: 18px;

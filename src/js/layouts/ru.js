@@ -285,7 +285,7 @@ export default [
         code: 'Space',
     },
     {
-        small: '=> en',
+        small: 'en <=',
         shift: null,
         code: 'ControlRight',
     },
@@ -298,10 +298,5 @@ export default [
         small: '&rarr;',
         shift: null,
         code: 'ArrowRight',
-    },
-    {
-        small: 'Win',
-        shift: null,
-        code: 'Win',
     },
 ];
