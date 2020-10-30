@@ -148,6 +148,8 @@ img {
 
 .active {
     background: #6b4ad4;
+    box-shadow: 2px 3px 0 1px #160a3d;
+
 }
 
 .letter {
@@ -236,3 +238,8 @@ textarea.output {
         -o-transform: scale(2.5);
     }
 }
+
+.hidden {
+    display: none;
+}
+

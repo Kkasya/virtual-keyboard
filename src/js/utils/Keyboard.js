@@ -13,7 +13,6 @@ const main = create('main', '', header);
 export default class Keyboard {
     constructor(rowsOrder) {
         this.rowsOrder = rowsOrder;
-        this.keysPressed = {};
         this.isCaps = false;
     }
 
@@ -25,8 +24,10 @@ export default class Keyboard {
             ['cols', 50],
             ['spellcheck', false],
             ['autocorrect', 'off']);
-        this.container = create('div', 'keyboard', null, main, ['language', langCode]);
+        this.container = create('div', 'keyboard hidden', null, main, ['language', langCode]);
         document.body.prepend(main);
+        console.log(this.output);
+        this.output.addEventListener('click', () => this.container.classList.remove('hidden'));
         return this;
     }
 
@@ -222,6 +223,13 @@ export default class Keyboard {
             Space: () => {
                 this.output.value = `${left} ${right}`;
                 cursorPos += 1;
+            },
+            End: () => {
+                //this.container.classList.add('hidden');
+                setTimeout(() => {
+                    this.container.classList.add('hidden');
+                }, 200);
+                this.output.value = '';
             }
         }
 
