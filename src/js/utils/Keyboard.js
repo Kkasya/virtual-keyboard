@@ -3,11 +3,13 @@ import create from './create.js';
 import language from '../layouts/index.js'; // { en, ru }
 import Key from './Key.js';
 
+const audio = create('audio', '');
+audio.src = '../../src/sounds/';
 const img = create('img', '');
 img.src = '../../src/images/keyboard1.png';
 const header = create('div', 'header',
     [create('h1', 'title', 'Virtual Keyboard'), img]);
-const main = create('main', '', header);
+const main = create('main', '', [header, audio]);
 
 
 export default class Keyboard {
@@ -26,7 +28,6 @@ export default class Keyboard {
             ['autocorrect', 'off']);
         this.container = create('div', 'keyboard hidden', null, main, ['language', langCode]);
         document.body.prepend(main);
-        console.log(this.output);
         this.output.addEventListener('click', () => this.container.classList.remove('hidden'));
         return this;
     }
@@ -64,7 +65,6 @@ export default class Keyboard {
 
     resetButton = ( { target: { dataset: { code } } }) => {
         const keyObject = this.keyButtons.find(key => key.code === code);
-        console.log(keyObject);
         if (!keyObject.code.match(/Caps|Shift/)) {
             keyObject.div.classList.remove('active');
             keyObject.div.removeEventListener('mouseleave', this.resetButton);
@@ -73,13 +73,31 @@ export default class Keyboard {
 
     handleEvent = (e) => {
         if(e.stopPropagation) e.stopPropagation();
+
         const { code, type } = e;
         const keyObject = this.keyButtons.find(key => key.code === code);
         if (!keyObject) return;
         this.output.focus();
 
+
         if (type.match(/keydown|mousedown/)) {
             if(type.match(/key/)) e.preventDefault();
+
+            let audioShift = '';
+            if (code.match(/Caps|Shift/)) {
+                audioShift = 'shift.wav';
+            } else if(code.match(/End/)) {
+                audioShift = 'done.wav';
+            } else if(code.match(/Key/)) {
+                audioShift = 'letter.wav';
+            } else audioShift = 'digital.wav';
+
+            audio.src += audioShift;
+            audio.currentTime = 0;
+            audio.play();
+            setTimeout(() => { audio.src = audio.src.slice(0, -audioShift.length);}, 250);
+
+
 
             if (code.match(/Shift/)) {
                 if (this.shiftKey) {
