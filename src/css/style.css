@@ -149,6 +149,22 @@ img {
     background: #6b4ad4;
 }
 
+[data-code="End"]{
+    background: #4627a8;
+}
+
+[data-code="Sound"] {
+    background: url("../images/sound1.png") center no-repeat ;
+    background-size: 60%;
+    background-color: rgb(104,104,138);
+
+}
+
+.active-sound {
+    background: url("../images/sound.png") center no-repeat ;
+    background-size: 60%;
+    background-color: #4627a8;
+}
 
 .active {
     background: #6b4ad4;
@@ -263,3 +279,9 @@ textarea.output {
         font-size: 5px;
     }
 }
+@media screen and (max-width: 550px) {
+    html {
+        font-size: 4.8px;
+    }
+}
+

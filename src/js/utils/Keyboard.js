@@ -2,6 +2,8 @@ import * as storage from './storage.js';
 import create from './create.js';
 import language from '../layouts/index.js'; // { en, ru }
 import Key from './Key.js';
+import {rowsOrder} from '../../index.js';
+import {lang} from '../../index.js';
 
 const audio = create('audio', '');
 audio.src = '../../src/sounds/';
@@ -16,6 +18,7 @@ export default class Keyboard {
     constructor(rowsOrder) {
         this.rowsOrder = rowsOrder;
         this.isCaps = false;
+        this.isSound = false;
     }
 
     init(langCode) {
@@ -83,19 +86,61 @@ export default class Keyboard {
         if (type.match(/keydown|mousedown/)) {
             if(type.match(/key/)) e.preventDefault();
 
-            let audioShift = '';
-            if (code.match(/Caps|Shift/)) {
-                audioShift = 'shift.wav';
-            } else if(code.match(/End/)) {
-                audioShift = 'done.wav';
-            } else if(code.match(/Key/)) {
-                audioShift = 'letter.wav';
-            } else audioShift = 'digital.wav';
+            if (code.match(/Sound/)) {
+                if (this.isSound) {
+                    this.isSound = false;
+                    keyObject.div.classList.remove('active-sound');
+                } else {
+                    this.isSound = true;
+                    keyObject.div.classList.add('active-sound');
+                }
+            }
+            const langAttr = Object.keys(language);
+            let langIndex = langAttr.indexOf(this.container.dataset.language);
+            this.keyBase = langIndex + 1 < langAttr.length ? language[langAttr[langIndex += 1]]
+                : language[langAttr[langIndex -= langIndex]];
 
-            audio.src += audioShift;
-            audio.currentTime = 0;
-            audio.play();
-            setTimeout(() => { audio.src = audio.src.slice(0, -audioShift.length);}, 250);
+            let audioShift = '';
+            if(langIndex + 1 < langAttr.length) {
+                if (code.match(/Shift/)) {
+                    audioShift = 'shift.wav';
+                } else if (code.match(/End/)) {
+                    audioShift = 'done.wav';
+                } else if (code.match(/Key/)) {
+                    audioShift = 'letter.wav';
+                } else if (code.match(/Caps/)) {
+                    audioShift = 'Caps.wav';
+                }else if (code.match(/Backspace|Delete/)) {
+                    audioShift = 'delete.wav';
+                }else if (code.match(/Enter/)) {
+                    audioShift = 'enter.wav';
+                }else audioShift = 'digital.wav';
+            } else {
+                if (code.match(/Shift/)) {
+                    audioShift = 'shift.mp3';
+                } else if (code.match(/End/)) {
+                    audioShift = 'done.mp3';
+                } else if (code.match(/Key/)) {
+                    audioShift = 'letter.mp3';
+                } else if (code.match(/Caps/)) {
+                    audioShift = 'Caps.mp3';
+                }else if (code.match(/Backspace|Delete/)) {
+                    audioShift = 'delete.mp3';
+                }else if (code.match(/Enter/)) {
+                    audioShift = 'enter.mp3';
+                }else audioShift = 'digital.mp3';
+            }
+
+
+            if (!this.isSound) {
+
+                audio.src += audioShift;
+                audio.currentTime = 0;
+                audio.play();
+                setTimeout(() => {
+                    audio.src = audio.src.slice(0, -audioShift.length);
+                }, 250);
+            }
 
 
 
@@ -124,7 +169,7 @@ export default class Keyboard {
 
             }
 
-            if(code.match(/Control/)) {
+            if(code.match(/LanguageButton/)) {
                 this.switchLanguage();
             }
 
@@ -247,8 +292,28 @@ export default class Keyboard {
             End: () => {
                 setTimeout(() => {
                     this.container.classList.add('hidden');
+                    this.keyButtons.forEach(button => {
+
+                        const keyBtn = this.keyBase.find(key => key.code === button.code);
+                        if (keyBtn.code.match(/Shift/)) {
+                            if (this.shiftKey) {
+                                this.shiftKey = false;
+                                button.div.classList.remove('active');
+                            }
+                        } else if (keyBtn.code.match(/Caps/)) {
+                            if (this.isCaps) {
+                                this.isCaps = false;
+                                button.div.classList.remove('active');
+                            }
+                        } else if (keyBtn.code.match(/Sound/)) {
+                            if (this.isSound) {
+                                this.isSound = false;
+                                button.div.classList.remove('active-sound');
+                            }
+                        }
+                    })
+                    this.switchUpperCase(false);
                 }, 200);
-                this.output.value = '';
             }
         }
 

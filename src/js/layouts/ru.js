@@ -277,7 +277,7 @@ export default [
     {
         small: 'RU(en)',
         shift: null,
-        code: 'ControlLeft',
+        code: 'LanguageButton',
     },
     {
         small: ' ',
@@ -285,7 +285,7 @@ export default [
         code: 'Space',
     },
     {
-        small: 'Done',
+        small: 'Close',
         shift: null,
         code: 'End',
     },
@@ -298,5 +298,9 @@ export default [
         small: '&rarr;',
         shift: null,
         code: 'ArrowRight',
+    },{
+        small: '',
+        shift: null,
+        code: 'Sound',
     },
 ];
