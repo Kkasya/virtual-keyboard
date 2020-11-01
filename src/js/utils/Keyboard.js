@@ -19,6 +19,7 @@ export default class Keyboard {
         this.rowsOrder = rowsOrder;
         this.isCaps = false;
         this.isSound = false;
+        this.isMicrofone = false;
     }
 
     init(langCode) {
@@ -81,10 +82,48 @@ export default class Keyboard {
         const keyObject = this.keyButtons.find(key => key.code === code);
         if (!keyObject) return;
         this.output.focus();
+        const langAttr = Object.keys(language);
+        let langIndex = langAttr.indexOf(this.container.dataset.language);
+
 
 
         if (type.match(/keydown|mousedown/)) {
             if(type.match(/key/)) e.preventDefault();
+
+            if (code.match(/Microfone/)) {
+                window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const recognize = new SpeechRecognition();
+                recognize.interimResults = true;
+                recognize.lang = storage.get('kbLang');
+
+                if (this.isMicrofone) {
+                    recognize.removeEventListener('end', () => {
+                        if(this.isMicrofone) recognize.start();
+                    });
+                    recognize.stop();
+                    this.isMicrofone = false;
+                    keyObject.div.classList.remove('active-microfone');
+                } else {
+                    this.isMicrofone = true;
+                    keyObject.div.classList.add('active-microfone');
+
+                        recognize.addEventListener('result', e => {
+                            const transcript = Array.from(e.results).map(result => result[0]).map(result => result.transcript).join('');
+                            if (e.results[0].isFinal) {
+                                let cursorPos = this.output.selectionStart;
+                                const left = this.output.value.slice(0, cursorPos);
+                                const right = this.output.value.slice(cursorPos);
+                                this.output.value = left + transcript + right;
+                            }
+                        });
+                         recognize.addEventListener('end', () => {
+                             if(this.isMicrofone) recognize.start();
+                         });
+                        recognize.start();
+                }
+            }
+
+
 
             if (code.match(/Sound/)) {
                 if (this.isSound) {
@@ -95,10 +134,6 @@ export default class Keyboard {
                     keyObject.div.classList.add('active-sound');
                 }
             }
-            const langAttr = Object.keys(language);
-            let langIndex = langAttr.indexOf(this.container.dataset.language);
-            this.keyBase = langIndex + 1 < langAttr.length ? language[langAttr[langIndex += 1]]
-                : language[langAttr[langIndex -= langIndex]];
 
             let audioShift = '';
             if(langIndex + 1 < langAttr.length) {
@@ -130,7 +165,6 @@ export default class Keyboard {
                     audioShift = 'enter.mp3';
                 }else audioShift = 'digital.mp3';
             }
-
 
             if (!this.isSound) {
 
@@ -166,7 +200,6 @@ export default class Keyboard {
                 this.isCaps = false;
                 this.switchUpperCase(false);
                 keyObject.div.classList.remove('active');
-
             }
 
             if(code.match(/LanguageButton/)) {
@@ -313,6 +346,7 @@ export default class Keyboard {
                         }
                     })
                     this.switchUpperCase(false);
+                    this.output.value = '';
                 }, 200);
             }
         }

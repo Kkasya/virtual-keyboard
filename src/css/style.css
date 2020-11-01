@@ -96,7 +96,7 @@ img {
 }
 
 [data-fn="true"] > .letter {
-    font-size: 2rem;
+    font-size: 2.7rem;
 }
 
 [data-code="CapsLock"] {
@@ -157,11 +157,21 @@ img {
     background: url("../images/sound1.png") center no-repeat ;
     background-size: 60%;
     background-color: rgb(104,104,138);
-
 }
 
 .active-sound {
     background: url("../images/sound.png") center no-repeat ;
+    background-size: 60%;
+    background-color: #4627a8;
+}
+[data-code="Microfone"] {
+    background: url("../images/microfone-none.png") center no-repeat ;
+    background-size: 60%;
+    background-color: rgb(104,104,138);
+}
+
+.active-microfone {
+    background: url("../images/microfone.png") center no-repeat ;
     background-size: 60%;
     background-color: #4627a8;
 }
@@ -173,7 +183,7 @@ img {
 }
 
 .letter {
-    font-size: 2.8rem;
+    font-size: 3rem;
     width: 100%;
     text-align: center;
     transition: all .2s ease;
@@ -195,7 +205,7 @@ textarea.output {
     height: 15rem;
     padding: 1rem;
     box-sizing: border-box;
-    font-size: 2.5rem;
+    font-size: 3rem;
     letter-spacing: 1px;
     margin-top: 5rem;
     margin-bottom: 1rem;
@@ -216,7 +226,7 @@ textarea.output {
 
 .sub.sub-active:not(:empty) {
     color: rgb(19, 80, 0);
-    font-size: 2.5rem;
+    font-size: 3rem;
 }
 
 .sub.sub-active:not(:empty) ~ .letter.sub-inactive {

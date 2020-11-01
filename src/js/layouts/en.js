@@ -305,4 +305,9 @@ export default [
         shift: null,
         code: 'Sound',
     },
+    {
+        small: '',
+        shift: null,
+        code: 'Microfone',
+    },
 ];
