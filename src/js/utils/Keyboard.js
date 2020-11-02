@@ -6,9 +6,9 @@ import {rowsOrder} from '../../index.js';
 import {lang} from '../../index.js';
 
 const audio = create('audio', '');
-audio.src = '../../src/sounds/';
+const src = './../../src/sounds/';
 const img = create('img', '');
-img.src = '../../src/images/keyboard1.png';
+img.src = './../../src/images/keyboard1.png';
 const header = create('div', 'header',
     [create('h1', 'title', 'Virtual Keyboard'), img]);
 const main = create('main', '', [header, audio]);
@@ -58,13 +58,15 @@ export default class Keyboard {
     }
 
     preHandleEvent = (e) => {
-        e.stopPropagation();
-        const keyDiv = e.target.closest('.keyboard__key');
-        if (!keyDiv) return;
-        const { dataset: { code } } = keyDiv;
-        // const code = keyDiv.dataset.code;
-        keyDiv.addEventListener('mouseleave', this.resetButton);
-        this.handleEvent({code, type: e.type});
+       setTimeout( () => {
+            e.stopPropagation();
+            const keyDiv = e.target.closest('.keyboard__key');
+            if (!keyDiv) return;
+            const {dataset: {code}} = keyDiv;
+            // const code = keyDiv.dataset.code;
+            keyDiv.addEventListener('mouseleave', this.resetButton);
+            this.handleEvent({code, type: e.type});
+        }, 100);
     }
 
     resetButton = ( { target: { dataset: { code } } }) => {
@@ -97,9 +99,9 @@ export default class Keyboard {
                 recognize.lang = storage.get('kbLang');
 
                 if (this.isMicrofone) {
-                    recognize.removeEventListener('end', () => {
-                        if(this.isMicrofone) recognize.start();
-                    });
+                    // recognize.removeEventListener('end', () => {
+                    //     if(this.isMicrofone) recognize.start();
+                    // });
                     recognize.stop();
                     this.isMicrofone = false;
                     keyObject.div.classList.remove('active-microfone');
@@ -116,9 +118,9 @@ export default class Keyboard {
                                 this.output.value = left + transcript + right;
                             }
                         });
-                         recognize.addEventListener('end', () => {
-                             if(this.isMicrofone) recognize.start();
-                         });
+                         // recognize.addEventListener('end', () => {
+                         //     if(this.isMicrofone) recognize.start();
+                         // });
                         recognize.start();
                 }
             }
@@ -144,7 +146,7 @@ export default class Keyboard {
                 } else if (code.match(/Key/)) {
                     audioShift = 'letter.wav';
                 } else if (code.match(/Caps/)) {
-                    audioShift = 'Caps.wav';
+                    audioShift = 'caps.wav';
                 }else if (code.match(/Backspace|Delete/)) {
                     audioShift = 'delete.wav';
                 }else if (code.match(/Enter/)) {
@@ -158,7 +160,7 @@ export default class Keyboard {
                 } else if (code.match(/Key/)) {
                     audioShift = 'letter.mp3';
                 } else if (code.match(/Caps/)) {
-                    audioShift = 'Caps.mp3';
+                    audioShift = 'caps.mp3';
                 }else if (code.match(/Backspace|Delete/)) {
                     audioShift = 'delete.mp3';
                 }else if (code.match(/Enter/)) {
@@ -167,13 +169,9 @@ export default class Keyboard {
             }
 
             if (!this.isSound) {
-
-                audio.src += audioShift;
+                audio.src = src + audioShift;
                 audio.currentTime = 0;
                 audio.play();
-                setTimeout(() => {
-                    audio.src = audio.src.slice(0, -audioShift.length);
-                }, 250);
             }
 
 

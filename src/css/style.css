@@ -19,18 +19,19 @@ main {
 .header {
     display: flex;
     justify-content: center;
+    margin-top: 2rem;
 }
 h1 {
     text-align: center;
     text-shadow: 0.4rem 0.4rem 0.3rem #160a3d;
     color: slateblue;
     font-size: 6.5rem;
-    margin: 2rem;
+    margin-right: 3rem;
+
 }
 img {
-    margin: 2rem;
-    max-width: 13rem;
-
+    max-width: 15rem;
+    align-self: center;
 }
 .keyboard {
     display: grid;
@@ -179,7 +180,6 @@ img {
 .active {
     background: #6b4ad4;
     box-shadow: 0.2rem 0.3rem 0 0.1rem #160a3d;
-
 }
 
 .letter {
